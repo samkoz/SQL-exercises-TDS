@@ -1,0 +1,52 @@
+What was the hottest day? Where was that?
+
+SELECT
+	MAX(MaxTemperatureF) max_temp,
+	Date,
+	ZIP
+FROM
+	weather
+GROUP BY
+	Date, ZIP
+ORDER BY max_temp DESC
+
+Answer: max_temp = "134"	Date = "2015-11-17"	ZIP = "94063"
+
+
+
+
+How many trips started at each station?
+
+SELECT
+	start_station,
+	count(*) num_trips_started
+FROM
+	trips
+GROUP BY
+	start_station
+ORDER BY num_trips_started DESC
+
+
+
+
+What's the shortest trip that happened?
+
+SELECT
+	MIN(duration) shortest_duration
+FROM
+	trips
+
+Answer: 100
+
+
+
+What is the average trip duration, by end station?
+
+SELECT
+	end_station,
+	AVG(duration) average_duration
+FROM
+	trips
+GROUP BY
+	end_station
+ORDER BY average_duration DESC

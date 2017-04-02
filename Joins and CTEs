@@ -1,0 +1,53 @@
+What are the three longest trips on rainy days?
+WITH
+	max_trip_each_day
+AS (
+	SELECT
+		SUBSTR(start_date, 1, 10) trip_date,
+		MAX(duration) longest_trip
+	FROM
+		trips
+	GROUP BY 1
+	)
+
+SELECT
+	m.trip_date,
+	m.longest_trip,
+	w.Date,
+	w.PrecipitationIn
+FROM
+	max_trip_each_day m
+JOIN
+	weather w
+ON
+	m.trip_date = w.Date
+WHERE
+	w.PrecipitationIn != 0
+ORDER BY m.longest_trip DESC
+LIMIT 3
+
+
+Can't figure out second query...also did not run the next one given I could not use small data sample and db was too big
+
+
+Which station is empty most often?
+WITH
+  zero_counts
+AS (
+  SELECT
+    station_id,
+    bikes_available empty_instances,
+  FROM
+    status
+  WHERE
+    bikes_available == 0
+)
+
+SELECT
+  station_id,
+  count(*) empty_counts
+FROM
+  zero_counts
+GROUP BY
+  station_id
+ORDER BY empty_counts
